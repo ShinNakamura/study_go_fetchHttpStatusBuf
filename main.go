@@ -12,9 +12,11 @@ import (
 	"os"
 	"strconv"
 	"sync"
+	"time"
 )
 
-const CONCURR_LIMIT_DEFAULT = 5
+const CONCURR_LIMIT_DEFAULT = 4
+const DURATION = 100 * time.Millisecond
 
 func main() {
 	var concurr_limit int
@@ -41,6 +43,7 @@ func main() {
 				ch <- fmt.Sprintf("%s,%v", url, err)
 				return
 			}
+			time.Sleep(DURATION) // 間隔をわざと空けてリクエストの勢いを緩める
 			ch <- fmt.Sprintf("%s,%v", url, resp.Status)
 			return
 		}(url)
