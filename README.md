@@ -48,3 +48,7 @@ func fetch(url string, ch chan<- string) {
 - 並行処理の同時実行数上限を第一引数で与えることができるようにしたい。(指定がなければデフォルト数を適用)
 
 
+## 参考
+
+- [go言語で同時並列数を制御する](https://ludwig125.hatenablog.com/entry/2019/09/28/043127)
+- [Go bufio Example(Lines)](https://pkg.go.dev/bufio#example-Scanner-Lines)
