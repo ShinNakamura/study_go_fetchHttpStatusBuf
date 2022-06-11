@@ -1,0 +1,7 @@
+https://github.com/ShinNakamura/study_go_fetchHttpStatusBuf
+https://pkg.go.dev/bufio#Scanner
+https://github.com/ShinNakamura?tab=repositories
+https://github.com/ShinNakamura/study_rust_csvupdate
+https://gist.github.com/ShinNakamura/f1cdfb891a3f2e9a9b6b365d4f83620c
+https://gist.github.com/ShinNakamura/34e4d9ab77675c982bb9bb3623126f63
+https://gist.github.com/ShinNakamura/9da657af127ca6266b1495dbd012908f
