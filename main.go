@@ -16,19 +16,27 @@ import (
 )
 
 const CONCURR_LIMIT_DEFAULT = 4
-const DURATION = 100 * time.Millisecond
+const DURATION_DEFAULT = 100 * time.Millisecond
 
 func main() {
-	var concurr_limit int
+	concurr_limit := CONCURR_LIMIT_DEFAULT
 	if len(os.Args) > 1 {
 		var err error
 		concurr_limit, err = strconv.Atoi(os.Args[1])
 		if err != nil {
 			log.Fatal(err)
 		}
-	} else {
-		concurr_limit = CONCURR_LIMIT_DEFAULT
 	}
+
+	duration := DURATION_DEFAULT
+	if len(os.Args) > 2 {
+		var err error
+		duration, err = time.ParseDuration(fmt.Sprintf("%sms", os.Args[2]))
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
+
 	var wg sync.WaitGroup
 	ch := make(chan string, concurr_limit) // limited buffer
 	scanner := bufio.NewScanner(os.Stdin)
@@ -43,7 +51,7 @@ func main() {
 				ch <- fmt.Sprintf("%s,%v", url, err)
 				return
 			}
-			time.Sleep(DURATION) // 間隔をわざと空けてリクエストの勢いを緩める
+			time.Sleep(duration) // 間隔をわざと空けてリクエストの勢いを緩める
 			ch <- fmt.Sprintf("%s,%v", url, resp.Status)
 			return
 		}(url)
