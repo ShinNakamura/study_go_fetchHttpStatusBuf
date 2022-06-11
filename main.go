@@ -5,12 +5,12 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
-	"log"
 	"strconv"
-	"bufio"
 	"sync"
 )
 
@@ -18,20 +18,20 @@ const CONCURR_LIMIT_DEFAULT = 5
 
 func main() {
 	var concurr_limit int
-	var err error
-	if len(os.Args) < 2 {
-		concurr_limit = CONCURR_LIMIT_DEFAULT
-	} else {
+	if len(os.Args) > 1 {
+		var err error
 		concurr_limit, err = strconv.Atoi(os.Args[1])
 		if err != nil {
 			log.Fatal(err)
 		}
+	} else {
+		concurr_limit = CONCURR_LIMIT_DEFAULT
 	}
 	var wg sync.WaitGroup
 	ch := make(chan string, concurr_limit) // limited buffer
-	scnr := bufio.NewScanner(os.Stdin)
-	for scnr.Scan() {
-		url := scnr.Text()
+	scanner := bufio.NewScanner(os.Stdin)
+	for scanner.Scan() {
+		url := scanner.Text()
 		wg.Add(1)
 		go func(url string) {
 			defer wg.Done()
@@ -46,7 +46,7 @@ func main() {
 		}(url)
 	}
 	wg.Wait()
-	if err := scnr.Err(); err != nil {
+	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
 }
